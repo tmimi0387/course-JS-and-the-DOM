@@ -33,3 +33,10 @@ document.addEventListener('mouseenter', function() {
 document.addEventListener('mouseleave', function () {
   mainHeading.textContent = originalHeading;
 })
+
+const link = document.querySelector('#my-classroom');
+
+link.addEventListener('click', function (event) {
+    event.preventDefault();
+    console.log("Wow! We didn't navigate to a new page!");
+});
