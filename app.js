@@ -34,9 +34,44 @@ document.addEventListener('mouseleave', function () {
   mainHeading.textContent = originalHeading;
 })
 
-const link = document.querySelector('#my-classroom');
+// create a nodeList of all the nanodegree cards
+const ndCards = document.querySelectorAll('.card--nanodegree__title');
 
-link.addEventListener('click', function (event) {
-    event.preventDefault();
-    console.log("Wow! We didn't navigate to a new page!");
+// loop through cards
+ndCards.forEach(function (card) {
+  // create a button element
+  const ndButton = document.createElement('button');
+  // set the text inside the button
+  ndButton.textContent = 'Add to Favorites';
+  // set the classes for the button
+  ndButton.classList = 'button button--primary';
+  // append button after the title
+  card.appendChild(ndButton);
 });
+
+function toggleFavorite(evt) {
+  // holds the target
+  const target = evt.target;
+  // makes sure what is being clicked is a button
+  if (target.nodeName === 'BUTTON') {
+    // prevents navigating to page when button is clicked
+    evt.preventDefault();
+    // if this card is already a favorite
+    if (target.textContent.startsWith('Add')) {
+      //toggles favorite text
+      evt.target.textContent = 'Remove From Favorites';
+      // creates a p element and adds ⭐ then appends it after the h4 element
+      const favorite = document.createElement('p');
+      favorite.textContent = '⭐⭐';
+      target.parentElement.appendChild(favorite);
+    } else {
+      // changes text back if it's clicked again
+      evt.target.textContent = 'Add To Favorites';
+      // removes the added p element
+      target.nextSibling.remove();
+    }
+  }
+};
+
+const ndContainer = document.querySelector('.list-nanodegrees');
+ndContainer.addEventListener('click', toggleFavorite);
